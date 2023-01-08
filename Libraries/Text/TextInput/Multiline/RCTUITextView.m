@@ -146,16 +146,9 @@ static UIColor *defaultPlaceholderColor()
 
   // We try to avoid calling this method as much as we can.
   // If the text has changed, there is nothing we can do.
-  if (![super.attributedText.string isEqualToString:attributedText.string]) {
-    [super setAttributedText:attributedText];
-  } else {
-  // But if the text is preserved, we just copying the attributes from the source string.
-    if (![super.attributedText isEqualToAttributedString:attributedText]) {
-      [self copyTextAttributesFrom:attributedText];
-    }
-  }
-
+  [super setAttributedText:attributedText];
   [self textDidChange];
+
 }
 
 #pragma mark - Overrides
@@ -292,18 +285,18 @@ static UIColor *defaultPlaceholderColor()
 
 #pragma mark - Utility Methods
 
-- (void)copyTextAttributesFrom:(NSAttributedString *)sourceString
-{
-  [self.textStorage beginEditing];
+// - (void)copyTextAttributesFrom:(NSAttributedString *)sourceString
+// {
+//   [self.textStorage beginEditing];
 
-  NSTextStorage *textStorage = self.textStorage;
-  [sourceString enumerateAttributesInRange:NSMakeRange(0, sourceString.length)
-                                   options:NSAttributedStringEnumerationReverse
-                                usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
-                                  [textStorage setAttributes:attrs range:range];
-                                }];
+//   NSTextStorage *textStorage = self.textStorage;
+//   [sourceString enumerateAttributesInRange:NSMakeRange(0, sourceString.length)
+//                                    options:NSAttributedStringEnumerationReverse
+//                                 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+//                                   [textStorage setAttributes:attrs range:range];
+//                                 }];
 
-  [self.textStorage endEditing];
-}
+//   [self.textStorage endEditing];
+// }
 
 @end
